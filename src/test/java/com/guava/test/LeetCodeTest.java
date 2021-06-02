@@ -13,6 +13,9 @@ import static org.junit.Assert.assertArrayEquals;
  * @date 2021-05-25 14:45
  */
 public class LeetCodeTest {
+    /**
+     * 测试两数之和
+     */
     @Test
     public void testTwoSum() {
         int[] nums = {2, 7, 11, 15};
@@ -85,6 +88,9 @@ public class LeetCodeTest {
         return pre.next;
     }
 
+    /**
+     * 测试无重复字符的最长子串
+     */
     @Test
     public void testLengthOfLongestSubstring() {
         int i = lengthOfLongestSubstring("abcabcbb");
@@ -93,6 +99,7 @@ public class LeetCodeTest {
     }
 
     /**
+     * 无重复字符的最长子串
      * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
      * 示例 1:
      * 输入: s = "abcabcbb"
@@ -146,5 +153,70 @@ public class LeetCodeTest {
         TestCase.assertEquals(sum, 5050);
     }
 
+    /**
+     * 测试寻找两个正序数组的中位数
+     */
+    @Test
+    public void testFindMedianSortedArrays() {
+        int[] nums1 = {1, 3};
+        int[] nums2 = {2};
+        double result = findMedianSortedArrays(nums1, nums2);
+        System.out.println(result);
+        TestCase.assertEquals(result, 2.0);
+    }
 
+    /**
+     * 寻找两个正序数组的中位数
+     * <p>
+     * 给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的 中位数 。
+     * 示例 1：
+     * 输入：nums1 = [1,3], nums2 = [2]
+     * 输出：2.00000
+     * 解释：合并数组 = [1,2,3] ，中位数 2
+     *
+     * @param nums1 数组1
+     * @param nums2 数组2
+     * @return 返回
+     */
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        if (m > n) {
+            return findMedianSortedArrays(nums2, nums1); // 保证 m <= n
+        }
+        int iMin = 0, iMax = m;
+        while (iMin <= iMax) {
+            int i = (iMin + iMax) / 2;
+            int j = (m + n + 1) / 2 - i;
+            if (j != 0 && i != m && nums2[j - 1] > nums1[i]) { // i 需要增大
+                iMin = i + 1;
+            } else if (i != 0 && j != n && nums1[i - 1] > nums2[j]) { // i 需要减小
+                iMax = i - 1;
+            } else { // 达到要求，并且将边界条件列出来单独考虑
+                int maxLeft;
+                if (i == 0) {
+                    maxLeft = nums2[j - 1];
+                } else if (j == 0) {
+                    maxLeft = nums1[i - 1];
+                } else {
+                    maxLeft = Math.max(nums1[i - 1], nums2[j - 1]);
+                }
+                if ((m + n) % 2 == 1) {
+                    return maxLeft;
+                } // 奇数的话不需要考虑右半部分
+
+                int minRight;
+                if (i == m) {
+                    minRight = nums2[j];
+                } else if (j == n) {
+                    minRight = nums1[i];
+                } else {
+                    minRight = Math.min(nums2[j], nums1[i]);
+                }
+                return (maxLeft + minRight) / 2.0; //如果是偶数的话返回结果
+            }
+        }
+        //没有符合值返回-1
+        return -1;
+    }
 }
