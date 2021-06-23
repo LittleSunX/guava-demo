@@ -25,7 +25,7 @@ public class LambdaTest {
         ExecutorService pool = new ThreadPoolExecutor(3, 3, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), threadFactory);
         try {
             //创建同步计数器
-            CountDownLatch cdl = new CountDownLatch(3);
+            final CountDownLatch cdl = new CountDownLatch(list.size());
             //打印数据源中的数据
             pool.execute(() -> list.parallelStream().forEach(s -> {
                 System.out.println(s);
