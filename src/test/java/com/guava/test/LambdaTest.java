@@ -118,8 +118,9 @@ public class LambdaTest {
             countDownLatch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        } finally {
+            pool.shutdown();
         }
-        pool.shutdown();
         TestCase.assertTrue(true);
     }
 }
