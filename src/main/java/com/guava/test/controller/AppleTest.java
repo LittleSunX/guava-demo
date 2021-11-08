@@ -2,7 +2,6 @@ package com.guava.test.controller;
 
 import com.guava.test.entiey.Apple;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
