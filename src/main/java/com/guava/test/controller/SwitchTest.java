@@ -2,6 +2,13 @@ package com.guava.test.controller;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author LittleSun
  * @version 1.0
@@ -10,7 +17,38 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SwitchTest {
     public static void main(String[] args) {
-        method("null");
+
+        //method("1");
+    }
+
+
+    public void test8(HttpServletRequest request) throws IOException {
+        ServletInputStream inputStream = request.getInputStream();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        int x;
+        while ((x = inputStream.read()) != -1) {
+            os.write(x);
+        }
+        os.flush();
+        String s = new String(os.toByteArray(), StandardCharsets.UTF_8);
+        System.out.println(s);
+    }
+
+    public void test9(HttpServletRequest request) {
+        try {
+            InputStream inputStream = request.getInputStream();
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = inputStream.read(buffer)) != -1) {
+                os.write(buffer, 0, len);
+            }
+            os.flush();
+            String s = new String(os.toByteArray(), StandardCharsets.UTF_8);
+            System.out.println(s);
+        } catch (Throwable e) {
+            e.getStackTrace();
+        }
     }
 
     public static void method(String param) {

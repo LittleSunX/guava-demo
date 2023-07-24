@@ -18,7 +18,7 @@ public class StringEscapeUtilsTest {
             new Apple(1, "<a>蓝苹果</a>", 1.0, 2.0),
             new Apple(1, "<a>绿苹果</a>", 1.0, 2.0));
 
-    @Test
+   @Test
     public void testStringEscape() {
         for (Apple apple : apples) {
             //转义html代码
